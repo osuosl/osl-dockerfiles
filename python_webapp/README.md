@@ -36,8 +36,9 @@ the entire working directory should be fine:
 If you need to place a config file for the application on the Docker image, now
 is the time.
 
-Install any required Python packages:
+Install any required Python packages and ```yum``` dependencies:
 
+    RUN yum install -y openssl-devel
     RUN pip install .
 
 And run migrations, collectstatic, and any other required operations:
@@ -52,6 +53,7 @@ Voila! The Dockerfile is complete. It should look something like this:
     RUN sed -i 's/WSGIPATH/ganeti_webmgr.ganeti_web/g' /etc/supervisor.d/app.conf
     COPY . /opt/app/src
     COPY ./config.yml /opt/ganeti_webmgr/config/config.yml
+    RUN yum install -y openssl-devel
     RUN pip install .
     RUN django-admin.py collectstatic --noinput --settings "ganeti_webmgr.ganeti_web.settings"
     RUN django-admin.py syncdb --noinput --settings "ganeti_webmgr.ganeti_web.settings"

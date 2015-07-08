@@ -14,10 +14,6 @@ describe 'python_webapp Dockerfile' do
     expect(os_version).to include('CentOS release 6.6')
   end
 
-  it 'installs required packages' do
-    expect(package('nginx')).to be_installed
-  end
-
   def os_version
     command('cat /etc/redhat-release').stdout
   end

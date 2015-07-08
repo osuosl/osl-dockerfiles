@@ -1,0 +1,22 @@
+---
+
+web:
+  build: . # This should be the path to the Dockerfile
+  volumes:
+    # This should be the path to the development checkout, a colon, and the
+    # path to where the website is installed.
+    - .:/opt/app/src
+  ports:
+    - "8000:80"
+  # If you're using another database like mysql:
+  #links:
+  # - mysql
+
+# MySQL database setup example
+# mysql:
+#  image: mysql:latest
+#  environment:
+#    MYSQL_ROOT_PASSWORD: app_root_password
+#    MYSQL_USER: app_user
+#    MYSQL_PASSWORD: app_user_password
+#    MYSQL_DATABASE: app_db

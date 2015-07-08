@@ -5,8 +5,9 @@ MAINTAINER OSU Open Source Lab, support@osuosl.org
 EXPOSE 80
 
 RUN yum groupinstall -y 'Development Tools'
+# needed for nginx package
 RUN yum install -y epel-release
-RUN yum install -y python-devel python-setuptools gcc libffi-devel nginx python-meld3
+RUN yum install -y python-devel python-setuptools libffi-devel nginx python-meld3
 
 RUN easy_install pip
 RUN pip install supervisor gunicorn

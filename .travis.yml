@@ -1,0 +1,9 @@
+language: ruby
+rvm:
+  - 2.1.5
+sudo: false
+cache: bundler
+install:
+  - bundle install --retry=3
+script:
+  - bundle exec rspec tests/

@@ -7,4 +7,4 @@ install:
   - curl -sLo - https://j.mp/install-travis-docker | sh -xe
   - bundle install --retry=3
 script:
-  - ./run 'bundle exec rspec tests/'
+  - ./run 'bundle exec rspec'

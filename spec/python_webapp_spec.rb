@@ -19,6 +19,10 @@ end
   end
 end
 
+describe port(80) do
+  it { should be_listening.with('tcp') }
+end
+
 describe command('pip') do
   its(:exit_status) { should eq 0 }
 end

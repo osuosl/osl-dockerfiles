@@ -34,7 +34,9 @@ the entire working directory should be fine:
     COPY . /opt/app/src
 
 If you need to place a config file for the application on the Docker image, now
-is the time.
+is the time. The nginx config will automatically serve any file placed in
+```/opt/app/static``` or ```/opt/app/media```, so these are good directories to
+use for static files and media in your app's config.
 
 Install any required Python packages and ```yum``` dependencies:
 

@@ -1,9 +1,10 @@
 language: ruby
 rvm:
   - 2.1.5
-sudo: false
+sudo: true
 cache: bundler
 install:
+  - curl -sLo - http://j.mp/install-travis-docker | sh -xe
   - bundle install --retry=3
 script:
-  - bundle exec rspec tests/
+  - ./run 'bundle exec rspec tests/'

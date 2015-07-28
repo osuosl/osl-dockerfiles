@@ -33,10 +33,6 @@ end
   end
 end
 
-describe command('cat /etc/redhat-release') do
-  its(:stdout) { should contain 'CentOS release 6' }
-end
-
 describe file('/etc/supervisord.conf') do
   its(:content) { should include('files = /etc/supervisor.d/*.conf') }
 end

@@ -2,7 +2,7 @@ FROM node:argon
 
 RUN mkdir -p /opt/code
 WORKDIR /opt/code
-RUN git clone --depth 1 --branch v0.1.1 https://github.com/osuosl/timesync-node .
+RUN git clone --depth 1 --branch v0.1.2 https://github.com/osuosl/timesync-node .
 
 RUN npm install
 RUN npm run migrations

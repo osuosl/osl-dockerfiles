@@ -35,7 +35,7 @@ RUN mkdir /var/run/sshd
 VOLUME "${JENKINS_AGENT_HOME}" "/tmp" "/run" "/var/run"
 WORKDIR "${JENKINS_AGENT_HOME}"
 
-COPY ../scripts/setup-sshd /usr/local/bin/setup-sshd
+COPY setup-sshd /usr/local/bin/setup-sshd
 
 EXPOSE 22
 

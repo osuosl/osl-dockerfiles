@@ -38,6 +38,7 @@ RUN sed -i 's/#PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/ssh
 RUN sed -i 's/#SyslogFacility.*/SyslogFacility AUTH/' /etc/ssh/sshd_config
 RUN sed -i 's/#LogLevel.*/LogLevel INFO/' /etc/ssh/sshd_config
 RUN mkdir /var/run/sshd
+RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ''
 
 VOLUME "${JENKINS_AGENT_HOME}" "/tmp" "/run" "/var/run"
 WORKDIR "${JENKINS_AGENT_HOME}"

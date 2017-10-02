@@ -16,9 +16,18 @@ ENV PATH $PATH:$JAVA_HOME/bin
 RUN groupadd -g ${gid} ${group} \
     && useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"
 
-# setup Java
-run yum install -y java-1.8.0-openjdk \
-    && yum clean all
+# install Java
+RUN yum install -y java-1.8.0-openjdk && yum clean all
+
+# install git
+RUN yum install -y git && yum clean all
+
+# setup sudo
+RUN yum install -y sudo && yum clean all
+RUN echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# install build-essential
+RUN yum install -y autoconf bison flex gcc gcc-c++ gettext kernel-devel make m4 ncurses-devel patch && yum clean all
 
 # setup SSH server
 RUN yum install -y openssh-server \

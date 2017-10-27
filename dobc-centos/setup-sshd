@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -ex
+
+# ensure variables passed to docker container are also exposed to ssh sessions
+env | grep _ >> /etc/environment
+
+ssh-keygen -A
+exec /usr/sbin/sshd -D -e "${@}"

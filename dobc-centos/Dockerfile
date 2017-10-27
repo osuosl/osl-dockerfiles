@@ -10,7 +10,6 @@ ARG gid=1000
 
 RUN groupadd -g ${gid} ${group} \
     && useradd -d /home/dobc -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"
-RUN echo dobcadmin123 | passwd "${user}" --stdin
 
 RUN sed -i '/^tsflags=nodocs$/d' /etc/yum.conf
 COPY CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo

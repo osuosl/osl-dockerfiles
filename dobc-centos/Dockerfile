@@ -16,7 +16,11 @@ COPY CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 COPY epel.repo /etc/yum.repos.d/epel.repo
 
 # install packages we need
-RUN yum install -y vim nano emacs-nox wget less git man man-pages \
+RUN yum install -y vim nano emacs-nox wget less git man man-pages screen \
+    && yum clean all
+
+# reinstall these packages to get their man pages
+RUN yum reinstall -y bash coreutils curl tar gzip procps-ng util-linux systemd gawk \
     && yum clean all
 
 # setup sudo

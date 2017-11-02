@@ -11,7 +11,7 @@ env | grep _ >> /etc/environment
 
 if [ -z "$@" ] ; then
   ssh-keygen -A
-  exec /usr/sbin/sshd -D
+  exec /usr/sbin/sshd -D -e
 else
   "$@"
 fi

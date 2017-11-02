@@ -2,7 +2,9 @@
 
 set -e
 
-echo $DOBC_PASSWORD | passwd dobc --stdin
+if [ -n "$DOBC_PASSWORD" ] ; then
+  echo $DOBC_PASSWORD | passwd dobc --stdin
+fi
 
 # ensure variables passed to docker container are also exposed to ssh sessions
 env | grep _ >> /etc/environment

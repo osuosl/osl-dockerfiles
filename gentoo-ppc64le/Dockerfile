@@ -4,6 +4,8 @@ RUN echo 'GENTOO_MIRRORS="http://gentoo.osuosl.org"' >> /etc/portage/make.conf
 RUN echo 'FEATURES="parallel-fetch"' >> /etc/portage/make.conf
 RUN echo 'CLEAN_DELAY=0' >> /etc/portage/make.conf
 RUN emerge-webrsync
+RUN eselect profile set default/linux/powerpc/ppc64/17.0/64bit-userland/little-endian/systemd
+RUN emerge -uDU --keep-going --with-bdeps=y -q @world
 RUN emerge -q emerge layman
 RUN layman -L && layman -a ppc64le && \
     cat "source /var/lib/layman/make.conf" >> /etc/portage/make.conf

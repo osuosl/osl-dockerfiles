@@ -6,7 +6,8 @@ RUN echo 'GENTOO_MIRRORS="http://gentoo.osuosl.org"' >> /etc/portage/make.conf &
     echo 'MAKEOPTS="-j20"' >> /etc/portage/make.conf && \
     mkdir -p /etc/portage/{package.accept_keywords,package.use} && \
     echo 'net-misc/dhcp -server' >> /etc/portage/package.use/dhcp && \
-    echo 'app-arch/pigz' >> /etc/portage/package.accept_keywords/pigz
+    echo 'app-arch/pigz' >> /etc/portage/package.accept_keywords/pigz && \
+    echo 'sys-kernel/dracut' >> /etc/portage/package.accept_keywords/dracut
 RUN emerge-webrsync && \
     emerge -q app-portage/eix app-portage/gentoolkit-dev \
     app-portage/portage-utils dev-vcs/git app-editors/vim sys-apps/ed \

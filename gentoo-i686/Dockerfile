@@ -1,4 +1,4 @@
-FROM gentoo/stage3-amd64
+FROM gentoo/stage3-x86
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 RUN echo 'GENTOO_MIRRORS="http://gentoo.osuosl.org"' >> /etc/portage/make.conf && \
     echo 'FEATURES="parallel-fetch"' >> /etc/portage/make.conf && \

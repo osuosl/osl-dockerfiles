@@ -1,9 +1,9 @@
-FROM gentoo/stage3-amd64
+FROM osuosl/gentoo:stage3-ppc64le
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 RUN echo 'GENTOO_MIRRORS="http://gentoo.osuosl.org"' >> /etc/portage/make.conf && \
     echo 'FEATURES="parallel-fetch"' >> /etc/portage/make.conf && \
     echo 'CLEAN_DELAY=0' >> /etc/portage/make.conf && \
-    echo 'MAKEOPTS="-j16"' >> /etc/portage/make.conf && \
+    echo 'MAKEOPTS="-j20"' >> /etc/portage/make.conf && \
     mkdir -p /etc/portage/{package.accept_keywords,package.use} && \
     echo 'net-misc/dhcp -server' >> /etc/portage/package.use/dhcp && \
     echo 'app-arch/pigz' >> /etc/portage/package.accept_keywords/pigz && \
@@ -13,5 +13,5 @@ RUN emerge-webrsync && \
     app-portage/portage-utils dev-vcs/git app-editors/vim sys-apps/ed \
     sys-devel/bc app-arch/pigz net-misc/dhcp net-fs/nfs-utils \
     sys-fs/lvm2 sys-fs/mdadm sys-fs/multipath-tools sys-kernel/dracut && \
-    rm -rf /usr/portage
+    rm -rf /usr/portage/
 CMD ["/bin/bash"]

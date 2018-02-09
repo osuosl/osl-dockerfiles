@@ -35,7 +35,8 @@ RUN echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 # Install build-essential
 RUN apt-get update \
     && apt-get install --no-install-recommends -y autoconf binutils-doc bison \
-    build-essential flex gettext ncurses-dev \
+    build-essential flex gettext ncurses-dev automake asciidoc curl wget \
+    lsb-release \
     && apt-get clean
 
 # setup SSH server

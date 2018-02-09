@@ -1,0 +1,6 @@
+[ganeti]
+name=Integ Ganeti Packages $releasever - $basearch
+baseurl=http://jfut.integ.jp/linux/ganeti/$releasever/$basearch
+enabled=1
+fastestmirror_enabled=0
+gpgcheck=0

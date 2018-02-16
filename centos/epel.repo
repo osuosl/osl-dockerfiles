@@ -1,6 +1,6 @@
 [epel]
-name=Extra Packages for Enterprise Linux 7 - $basearch
-baseurl=http://epel.osuosl.org/7/$basearch
+name=Extra Packages for Enterprise Linux $releasever - $basearch
+baseurl=http://epel.osuosl.org/$releasever/$basearch
 enabled=1
 failovermethod=priority
 fastestmirror_enabled=0

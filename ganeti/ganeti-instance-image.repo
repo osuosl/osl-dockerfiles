@@ -1,0 +1,7 @@
+[ganeti-instance-image]
+name=Ganeti Instance Image - $basearch
+baseurl=http://ftp.osuosl.org/pub/osl/ganeti-instance-image/yum/$basearch/$releasever
+enabled=1
+fastestmirror_enabled=0
+gpgcheck=1
+gpgkey=http://ftp.osuosl.org/pub/osl/ganeti-instance-image/yum/repo.gpg

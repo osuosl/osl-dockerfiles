@@ -16,16 +16,6 @@ ENV PATH $PATH:$JAVA_HOME/bin
 RUN groupadd -g ${gid} ${group} && \
     useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"
 
-# install Java
-RUN apt-get update && \
-    apt-get install --no-install-recommends -y openjdk-8-jdk && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# install git
-RUN apt-get update && \
-    apt-get install --no-install-recommends -y git && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
 # setup sudo
 RUN apt-get update && \
     apt-get install --no-install-recommends -y sudo && \
@@ -37,7 +27,7 @@ RUN apt-get update && \
     apt-get install --no-install-recommends -y autoconf binutils-doc bison \
     build-essential flex gettext ncurses-dev automake asciidoc curl wget \
     libopenblas-dev libopenmpi-dev lsb-release xsltproc docbook-xsl docbook-xml \
-    gfortran ccache ca-certificates && \
+    gfortran ccache ca-certificates openjdk-8-jdk git && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install conda py3

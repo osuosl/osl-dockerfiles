@@ -1,4 +1,4 @@
-FROM nvidia/cuda-ppc64le:9.0-devel-ubuntu16.04
+FROM nvidia/cuda-ppc64le:8.0-cudnn6-devel-ubuntu16.04
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 
 # Below was taken from https://github.com/jenkinsci/docker-ssh-slave

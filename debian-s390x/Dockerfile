@@ -1,4 +1,5 @@
-FROM s390x/debian:9
+ARG VERSION="9"
+FROM s390x/debian:${VERSION}
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 
 # Below was taken from https://github.com/jenkinsci/docker-ssh-slave
@@ -13,41 +14,49 @@ ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
 ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk
 ENV PATH $PATH:$JAVA_HOME/bin
 
-RUN groupadd -g ${gid} ${group} \
-    && useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"
+ARG VERSION="9"
+COPY sources/${VERSION} /etc/apt/sources.list
 
-# install Java
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y openjdk-8-jdk \
-    && apt-get clean
+RUN groupadd -g ${gid} ${group} && \
+    useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"
 
-# install git
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y git \
-    && apt-get clean
+# Upgrade system
+RUN apt-get update && \
+    apt-get upgrade --no-install-recommends -y && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # setup sudo
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y sudo \
-    && apt-get clean
-RUN echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y sudo && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # Install build-essential
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y autoconf binutils-doc bison \
-    build-essential flex gettext ncurses-dev \
-    && apt-get clean
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y autoconf binutils-doc bison \
+    build-essential flex gettext ncurses-dev openjdk-8-jdk git && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Setup ccache
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y ccache && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /var/cache/ccache && \
+    chown ${user}:${group} /var/cache/ccache && \
+    chmod 2777 /var/cache/ccache
+
+COPY ccache.conf /etc/ccache.conf
 
 # setup SSH server
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y openssh-server \
-    && apt-get clean
-RUN sed -i 's/#PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
-RUN sed -i 's/#RSAAuthentication.*/RSAAuthentication yes/' /etc/ssh/sshd_config
-RUN sed -i 's/#PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config
-RUN sed -i 's/#SyslogFacility.*/SyslogFacility AUTH/' /etc/ssh/sshd_config
-RUN sed -i 's/#LogLevel.*/LogLevel INFO/' /etc/ssh/sshd_config
-RUN mkdir /var/run/sshd
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y openssh-server  && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    sed -i 's/#PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config && \
+    sed -i 's/#RSAAuthentication.*/RSAAuthentication yes/' /etc/ssh/sshd_config && \
+    sed -i 's/#PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config && \
+    sed -i 's/#SyslogFacility.*/SyslogFacility AUTH/' /etc/ssh/sshd_config && \
+    sed -i 's/#LogLevel.*/LogLevel INFO/' /etc/ssh/sshd_config && \
+    mkdir /var/run/sshd
 
 VOLUME "${JENKINS_AGENT_HOME}" "/tmp" "/run" "/var/run"
 WORKDIR "${JENKINS_AGENT_HOME}"

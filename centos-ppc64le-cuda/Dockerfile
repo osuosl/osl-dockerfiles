@@ -25,7 +25,7 @@ RUN groupadd -g ${gid} ${group} && \
     useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"
 
 # setup sudo
-RUN yum install -y sudo && yum clean all && \
+RUN yum install -y sudo && \
     yum clean all && \
     rm -rf /var/cache/yum && \
 	echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers

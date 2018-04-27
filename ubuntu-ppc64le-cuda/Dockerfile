@@ -1,4 +1,5 @@
-FROM nvidia/cuda-ppc64le:9.0-devel-ubuntu16.04
+ARG VERSION="9.0-devel-ubuntu16.04"
+FROM nvidia/cuda-ppc64le:${VERSION}
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 
 # Below was taken from https://github.com/jenkinsci/docker-ssh-slave
@@ -16,6 +17,12 @@ ENV PATH $PATH:$JAVA_HOME/bin
 RUN groupadd -g ${gid} ${group} && \
     useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"
 
+# Upgrade system
+RUN apt-get update && \
+    apt-get upgrade --no-install-recommends -y && \
+    apt autoremove -y && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # setup sudo
 RUN apt-get update && \
     apt-get install --no-install-recommends -y sudo && \
@@ -29,6 +36,16 @@ RUN apt-get update && \
     libopenblas-dev libopenmpi-dev lsb-release xsltproc docbook-xsl docbook-xml \
     gfortran ccache ca-certificates openjdk-8-jdk git && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Setup ccache
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y ccache && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /var/cache/ccache && \
+    chown ${user}:${group} /var/cache/ccache && \
+    chmod 2777 /var/cache/ccache
+
+COPY ccache.conf /etc/ccache.conf
 
 # Install conda py3
 RUN curl https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-ppc64le.sh \

@@ -37,6 +37,6 @@ RUN yum install -y openssh-server && yum clean all && \
 
 COPY setup-sshd /usr/local/bin/setup-sshd
 
-EXPOSE 22
+EXPOSE 22 8080
 
 ENTRYPOINT ["/usr/local/bin/setup-sshd"]

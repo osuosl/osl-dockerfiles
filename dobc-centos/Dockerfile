@@ -14,7 +14,8 @@ RUN groupadd -g ${gid} ${group} \
 RUN sed -i '/^tsflags=nodocs$/d' /etc/yum.conf
 
 # install packages we need
-RUN yum install -y vim nano emacs-nox wget less git man man-pages screen python-virtualenv && \
+RUN yum install -y vim nano emacs-nox wget less git man man-pages screen \
+        python-virtualenv file mariadb && \
     yum clean all
 
 # reinstall these packages to get their man pages
@@ -35,6 +36,7 @@ RUN yum install -y openssh-server && yum clean all && \
     mkdir /var/run/sshd && \
     ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ''
 
+COPY mysql.sh /etc/profile.d/mysql.sh
 COPY setup-sshd /usr/local/bin/setup-sshd
 
 EXPOSE 22 8080

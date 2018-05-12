@@ -15,7 +15,7 @@ RUN sed -i '/^tsflags=nodocs$/d' /etc/yum.conf
 
 # install packages we need
 RUN yum install -y vim nano emacs-nox wget less git man man-pages screen \
-        python-virtualenv file mariadb && \
+        python-virtualenv file mariadb MySQL-python && \
     yum clean all
 
 # reinstall these packages to get their man pages

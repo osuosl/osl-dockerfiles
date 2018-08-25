@@ -12,11 +12,11 @@ FROM ${BOOTSTRAP:-ppc64le/alpine:3.7} as builder
 WORKDIR /gentoo
 
 ARG ARCH=ppc64le
-ARG MICROARCH=ppc64le
-ARG SUFFIX="-20180117"
+ARG MICROARCH=power8le
+ARG SUFFIX="-latest"
 ARG DIST="https://ftp.osuosl.org/pub/osl/openpower/gentoo/releases"
 ARG SIGNING_KEY="0x2DF30655A70B13B7"
-ARG STAGE3="stage3-${MICROARCH}${SUFFIX}.tar.bz2"
+ARG STAGE3="stage3-${MICROARCH}${SUFFIX}.tar.xz"
 
 RUN echo "Building Gentoo Container image for ${ARCH} ${SUFFIX} fetching from ${DIST}" \
  && apk --no-cache add gnupg tar wget xz \

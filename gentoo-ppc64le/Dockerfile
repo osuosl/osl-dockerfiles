@@ -6,7 +6,7 @@ RUN echo 'GENTOO_MIRRORS="http://gentoo.osuosl.org"' >> /etc/portage/make.conf &
     echo 'MAKEOPTS="-j20"' >> /etc/portage/make.conf && \
     mkdir -p /etc/portage/{package.accept_keywords,package.use} && \
     echo 'net-misc/dhcp -server' >> /etc/portage/package.use/dhcp && \
-    echo 'dev-libs/libpcre2 jit' >> /etc/portage/package.use/dhcp && \
+    echo 'dev-libs/libpcre2 jit' >> /etc/portage/package.use/libpcre2 && \
     echo 'app-arch/pigz' >> /etc/portage/package.accept_keywords/pigz && \
     echo 'sys-kernel/dracut' >> /etc/portage/package.accept_keywords/dracut && \
     echo 'sys-devel/gcc **' >> /etc/portage/package.accept_keywords/gcc

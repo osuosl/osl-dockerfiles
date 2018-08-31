@@ -36,6 +36,7 @@ FROM scratch
 
 WORKDIR /
 COPY --from=builder /gentoo/ /
-COPY overlays/ /usr/local/overlay
-RUN echo 'PORTDIR_OVERLAY=/usr/local/overlay' >> /etc/portage/make.conf
+COPY overlay/ /usr/local/overlay
+RUN echo 'PORTDIR_OVERLAY=/usr/local/overlay' >> /etc/portage/make.conf && \
+    eselect profile set localrepo:hardened-ppc64le
 CMD ["/bin/bash"]

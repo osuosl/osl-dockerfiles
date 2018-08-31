@@ -36,4 +36,6 @@ FROM scratch
 
 WORKDIR /
 COPY --from=builder /gentoo/ /
+COPY overlays/ /usr/local/overlay
+RUN echo 'PORTDIR_OVERLAY=/usr/local/overlay' >> /etc/portage/make.conf
 CMD ["/bin/bash"]

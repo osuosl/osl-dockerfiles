@@ -1,5 +1,5 @@
 ARG VERSION="28"
-FROM fedora:${VERSION}
+FROM ppc64le/fedora:${VERSION}
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 
 # Point to our mirrors and update to latest

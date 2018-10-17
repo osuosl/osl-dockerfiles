@@ -2,9 +2,7 @@ ARG VERSION="28"
 FROM fedora:${VERSION}
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 
-# Point to our mirrors and update to latest
-COPY fedora.repo /etc/yum.repos.d/fedora.repo
-COPY fedora-updates.repo /etc/yum.repos.d/fedora-updates.repo
+# Update to latest
 RUN yum upgrade -y && \
     yum clean all && \
     rm -rf /var/cache/yum

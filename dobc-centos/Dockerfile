@@ -16,19 +16,19 @@ RUN sed -i '/^tsflags=nodocs$/d' /etc/yum.conf
 # install packages we need
 RUN yum install -y vim nano emacs-nox wget less git man man-pages screen \
         python-virtualenv file mariadb MySQL-python && \
-    yum clean all
+    yum clean all && rm -rf /var/cache/yum
 
 # reinstall these packages to get their man pages
 RUN yum reinstall -y bash coreutils curl tar gzip procps-ng util-linux systemd gawk && \
-    yum clean all
+    yum clean all && rm -rf /var/cache/yum
 
 # setup sudo
 RUN yum install -y sudo && \
-    yum clean all && \
+    yum clean all && rm -rf /var/cache/yum && \
     echo "dobc ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # setup SSH server
-RUN yum install -y openssh-server && yum clean all && \
+RUN yum install -y openssh-server && yum clean all && rm -rf /var/cache/yum && \
     sed -i 's/#PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config && \
     sed -i 's/#RSAAuthentication.*/RSAAuthentication yes/' /etc/ssh/sshd_config && \
     sed -i 's/#SyslogFacility.*/SyslogFacility AUTH/' /etc/ssh/sshd_config && \

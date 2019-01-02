@@ -11,7 +11,7 @@ RUN echo 'GENTOO_MIRRORS="http://gentoo.osuosl.org"' >> /etc/portage/make.conf &
     echo 'sys-kernel/dracut' >> /etc/portage/package.accept_keywords/dracut && \
     echo 'sys-devel/gcc **' >> /etc/portage/package.accept_keywords/gcc
 RUN emerge-webrsync && \
-    emerge -q app-portage/eix app-portage/gentoolkit-dev app-portage/repoman \
+    emerge -q app-portage/eix app-portage/gentoolkit app-portage/repoman \
     app-portage/portage-utils dev-vcs/git app-editors/vim sys-apps/ed \
     sys-devel/bc app-arch/pigz net-misc/dhcp net-fs/nfs-utils \
     sys-fs/lvm2 sys-fs/mdadm sys-fs/multipath-tools sys-kernel/dracut \

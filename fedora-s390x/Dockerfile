@@ -1,4 +1,4 @@
-ARG VERSION="28"
+ARG VERSION="29"
 FROM s390x/fedora:${VERSION}
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 

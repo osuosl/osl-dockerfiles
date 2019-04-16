@@ -9,9 +9,10 @@ ARG group=jenkins
 ARG uid=10000
 ARG gid=10000
 ARG JENKINS_AGENT_HOME=/home/${user}
+ARG JDK_VER=8
 
 ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
-ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk
+ENV JAVA_HOME /usr/lib/jvm/java-1.${JDK_VER}.0-openjdk
 ENV PATH $PATH:$JAVA_HOME/bin
 
 ARG VERSION="9"
@@ -35,7 +36,7 @@ RUN apt-get update && \
 RUN apt-get update && \
     apt-get install --no-install-recommends -y autoconf binutils-doc bison \
     build-essential flex gettext ncurses-dev automake asciidoc curl wget \
-    lsb-release openjdk-8-jdk git && \
+    lsb-release openjdk-${JDK_VER}-jdk git && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Setup ccache

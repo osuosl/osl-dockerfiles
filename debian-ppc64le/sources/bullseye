@@ -1,0 +1,3 @@
+deb http://debian.osuosl.org/debian bullseye main
+deb http://debian.osuosl.org/debian bullseye-updates main
+deb http://security.debian.org bullseye/updates main

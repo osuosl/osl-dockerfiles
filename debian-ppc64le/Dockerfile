@@ -1,4 +1,4 @@
-ARG VERSION="9"
+ARG VERSION="10"
 FROM ppc64le/debian:${VERSION}
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 
@@ -9,7 +9,7 @@ ARG group=jenkins
 ARG uid=10000
 ARG gid=10000
 ARG JENKINS_AGENT_HOME=/home/${user}
-ARG JDK_VER=8
+ARG JDK_VER=11
 
 ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
 ENV JAVA_HOME /usr/lib/jvm/java-1.${JDK_VER}.0-openjdk

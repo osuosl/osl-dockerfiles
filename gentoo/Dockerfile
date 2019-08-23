@@ -15,7 +15,7 @@ RUN emerge-webrsync && \
     app-portage/portage-utils dev-vcs/git app-editors/vim sys-apps/ed \
     sys-devel/bc app-arch/pigz net-misc/dhcp net-fs/nfs-utils \
     sys-fs/lvm2 sys-fs/mdadm sys-fs/multipath-tools sys-kernel/dracut \
-    =sys-devel/gcc-8.3* dev-libs/elfutils && \
-    gcc-config x86_64-pc-linux-gnu-8.3.0 && \
+    =sys-devel/gcc-9.2* dev-libs/elfutils && \
+    gcc-config x86_64-pc-linux-gnu-9.2.0 && \
     rm -rf /usr/portage
 CMD ["/bin/bash"]

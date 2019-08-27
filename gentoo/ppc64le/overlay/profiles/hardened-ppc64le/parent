@@ -1,2 +1,3 @@
-../../../../../../usr/portage/profiles/hardened/linux/powerpc/ppc64/64bit-userland
+../../../../../../usr/portage/profiles/default/linux/powerpc/ppc64/17.0/64bit-userland/little-endian
 ../../../../../../usr/portage/profiles/arch/powerpc/ppc64/64le
+../../../../../../usr/portage/profiles/features/hardened

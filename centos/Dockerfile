@@ -1,10 +1,13 @@
-FROM centos:7
+ARG VERSION="8"
+FROM centos:${VERSION}
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 
-COPY CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
-COPY epel.repo /etc/yum.repos.d/epel.repo
+COPY fix-repos.sh /root/fix-repos.sh
+COPY fix-epel.sh /root/fix-epel.sh
 
-RUN yum upgrade -y && \
+RUN bash /root/fix-repos.sh && rm -rf /root/fix-repos.sh && \
+    yum install -y epel-release && bash /root/fix-epel.sh && rm -rf /root/fix-epel.sh && \
+    yum upgrade -y && \
     yum install -y vim nano emacs-nox wget less git && \
     yum clean all && \
     rm -rf /var/cache/yum

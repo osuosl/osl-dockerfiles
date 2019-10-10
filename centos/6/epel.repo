@@ -1,8 +1,0 @@
-[epel]
-name=Extra Packages for Enterprise Linux $releasever - $basearch
-baseurl=http://epel.osuosl.org/$releasever/$basearch
-enabled=1
-failovermethod=priority
-fastestmirror_enabled=0
-gpgcheck=1
-gpgkey=http://epel.osuosl.org/RPM-GPG-KEY-EPEL-6

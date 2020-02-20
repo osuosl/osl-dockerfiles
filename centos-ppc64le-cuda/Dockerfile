@@ -73,15 +73,15 @@ RUN git clone https://github.com/ninja-build/ninja.git && cd ninja && \
     cp ninja /usr/local/bin/ && cd ../ && rm -rf ninja
 
 # Install magma
-RUN curl -o magma-2.3.0.tar.gz "http://icl.cs.utk.edu/projectsfiles/magma/downloads/magma-2.3.0.tar.gz" && \
-    gunzip -c magma-2.3.0.tar.gz | tar -xvf - && cd magma-2.3.0 && \
+RUN curl -o magma-2.5.2.tar.gz "http://icl.cs.utk.edu/projectsfiles/magma/downloads/magma-2.5.2.tar.gz" && \
+    gunzip -c magma-2.5.2.tar.gz | tar -xvf - && cd magma-2.5.2 && \
     cp make.inc-examples/make.inc.openblas make.inc && \
     sed -i 's/nvcc/\/usr\/local\/cuda\/bin\/nvcc/' make.inc && \
     sed -i 's/#OPENBLASDIR/OPENBLASDIR/' make.inc && \
     sed -i 's/\/usr\/local\/openblas/\/usr/' make.inc && \
     sed -i 's/#CUDADIR/CUDADIR/' make.inc && \
     sed -i 's/#GPU_TARGET ?= Kepler Maxwell Pascal/GPU_TARGET ?= Kepler Maxwell Pascal/' make.inc && \
-    make -j20 install && cd ../ && rm -rf magma-2.3.0.tar.gz magma-2.3.0
+    make -j20 install && cd ../ && rm -rf magma-2.5.2.tar.gz magma-2.5.2
 
 # Ensure all files are owned by jenkins in its homedir
 RUN chown -R ${user}:${group} ${JENKINS_AGENT_HOME}

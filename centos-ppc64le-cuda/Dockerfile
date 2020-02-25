@@ -34,7 +34,17 @@ RUN yum install -y sudo && \
 RUN yum install -y autoconf bison flex gcc gcc-c++ gettext kernel-devel make m4 \
     ncurses-devel automake asciidoc bzip2 curl wget openblas-devel \
     openmpi-devel redhat-lsb libxslt docbook-style-xsl docbook-dtds \
-    gcc-gfortran ca-certificates patch java-1.8.0-openjdk git && \
+    gcc-gfortran ca-certificates patch java-1.8.0-openjdk git \
+    libcublas-devel cuda-misc-headers-${VERSION/./-} cuda-nvcc-${VERSION/./-} \
+    cuda-cusparse-dev-${VERSION/./-} cuda-cudart-dev-${VERSION/./-} && \
+    yum clean all && \
+    rm -rf /var/cache/yum
+
+# install CUDA headers
+RUN export CUDA_VER=${NVIDIA_REQUIRE_CUDA/cuda>=/} && \
+    export VER=${CUDA_VER/./-} && \
+    yum install -y libcublas-devel cuda-misc-headers-${VER} cuda-nvcc-${VER} \
+    cuda-cusparse-dev-${VER} cuda-cudart-dev-${VER} && \
     yum clean all && \
     rm -rf /var/cache/yum
 
@@ -54,7 +64,7 @@ RUN curl https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-ppc64le.sh 
     bash ${JENKINS_AGENT_HOME}/miniconda.sh -b -p ${JENKINS_AGENT_HOME}/miniconda && \
     export PATH=${JENKINS_AGENT_HOME}/miniconda/bin:$PATH && \
     conda install -y pyyaml && \
-    pip install "numpy<1.17.0" && \
+    ${CONDA_ROOT_PREFIX}/bin/pip install numpy && \
     conda clean -ya
 
 # Install conda py2

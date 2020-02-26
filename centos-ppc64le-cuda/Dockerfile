@@ -34,9 +34,7 @@ RUN yum install -y sudo && \
 RUN yum install -y autoconf bison flex gcc gcc-c++ gettext kernel-devel make m4 \
     ncurses-devel automake asciidoc bzip2 curl wget openblas-devel \
     openmpi-devel redhat-lsb libxslt docbook-style-xsl docbook-dtds \
-    gcc-gfortran ca-certificates patch java-1.8.0-openjdk git \
-    libcublas-devel cuda-misc-headers-${VERSION/./-} cuda-nvcc-${VERSION/./-} \
-    cuda-cusparse-dev-${VERSION/./-} cuda-cudart-dev-${VERSION/./-} && \
+    gcc-gfortran ca-certificates patch java-1.8.0-openjdk git && \
     yum clean all && \
     rm -rf /var/cache/yum
 

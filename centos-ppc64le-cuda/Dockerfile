@@ -62,7 +62,7 @@ RUN curl https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-ppc64le.sh 
     bash ${JENKINS_AGENT_HOME}/miniconda.sh -b -p ${JENKINS_AGENT_HOME}/miniconda && \
     export PATH=${JENKINS_AGENT_HOME}/miniconda/bin:$PATH && \
     conda install -y pyyaml && \
-    ${CONDA_ROOT_PREFIX}/bin/pip install numpy && \
+    pip install "numpy<1.17.0" && \
     conda clean -ya
 
 # Install conda py2

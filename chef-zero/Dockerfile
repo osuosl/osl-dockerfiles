@@ -2,7 +2,7 @@ FROM centos:7
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 
 ARG CHANNEL=stable
-ARG VERSION=13.8.5
+ARG VERSION=15.8.23
 ARG CHEF_PORT=8889
 ARG CHEF_HOST=0.0.0.0
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/chef/bin:/opt/chef/embedded/bin \

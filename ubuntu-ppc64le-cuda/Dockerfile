@@ -4,18 +4,20 @@ LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 
 # Below was taken from https://github.com/jenkinsci/docker-ssh-slave
 
-ARG user=jenkins
-ARG group=jenkins
+ARG user=docker
+ARG group=docker
 ARG uid=10000
 ARG gid=10000
-ARG JENKINS_AGENT_HOME=/home/${user}
+ARG DOCKER_HOME=/home/${user}
 
-ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
+ENV container docker
+ENV DOCKER_HOME ${DOCKER_HOME}
 ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk
 ENV PATH $PATH:$JAVA_HOME/bin
 
 RUN groupadd -g ${gid} ${group} && \
-    useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"
+    useradd -d "${DOCKER_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}" && \
+    echo 'jenkins:jenkins' | chpasswd
 
 # Upgrade system
 RUN apt-get update && \
@@ -27,7 +29,7 @@ RUN apt-get update && \
 RUN apt-get update && \
     apt-get install --no-install-recommends -y sudo && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+    echo "docker ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # Install packages we need
 RUN apt-get update && \
@@ -49,18 +51,18 @@ COPY ccache.conf /etc/ccache.conf
 
 # Install conda py3
 RUN curl https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-ppc64le.sh \
-    -o ${JENKINS_AGENT_HOME}/miniconda.sh && \
-    bash ${JENKINS_AGENT_HOME}/miniconda.sh -b -p ${JENKINS_AGENT_HOME}/miniconda && \
-    export PATH=${JENKINS_AGENT_HOME}/miniconda/bin:$PATH && \
+    -o ${DOCKER_HOME}/miniconda.sh && \
+    bash ${DOCKER_HOME}/miniconda.sh -b -p ${DOCKER_HOME}/miniconda && \
+    export PATH=${DOCKER_HOME}/miniconda/bin:$PATH && \
     conda install -y pyyaml && \
     pip install numpy && \
     conda clean -ya
 
 # Install conda py2
-RUN export PATH=${JENKINS_AGENT_HOME}/miniconda/bin:$PATH && \
+RUN export PATH=${DOCKER_HOME}/miniconda/bin:$PATH && \
     conda create -n py2k python=2 -y && \
     bash -c "source activate py2k" && \
-    export CONDA_ROOT_PREFIX="${JENKINS_AGENT_HOME}/miniconda/envs/py2k" && \
+    export CONDA_ROOT_PREFIX="${DOCKER_HOME}/miniconda/envs/py2k" && \
     conda install -y pyyaml && \
     ${CONDA_ROOT_PREFIX}/bin/pip install numpy && \
     conda clean -ya
@@ -82,8 +84,8 @@ RUN curl -o magma-2.5.2.tar.gz "http://icl.cs.utk.edu/projectsfiles/magma/downlo
     sed -i 's/#GPU_TARGET ?= Kepler Maxwell Pascal/GPU_TARGET ?= Kepler Maxwell Pascal/' make.inc && \
     make -j20 install && cd ../ && rm -rf magma-2.5.2.tar.gz magma-2.5.2
 
-# Ensure all files are owned by jenkins in its homedir
-RUN chown -R ${user}:${group} ${JENKINS_AGENT_HOME}
+# Ensure all files are owned by docker in its homedir
+RUN chown -R ${user}:${group} ${DOCKER_HOME}
 
 # setup SSH server
 RUN apt-get update && \
@@ -96,11 +98,11 @@ RUN apt-get update && \
     sed -i 's/#LogLevel.*/LogLevel INFO/' /etc/ssh/sshd_config && \
     mkdir /var/run/sshd
 
-VOLUME "${JENKINS_AGENT_HOME}" "/tmp" "/run" "/var/run"
-WORKDIR "${JENKINS_AGENT_HOME}"
+VOLUME "${DOCKER_HOME}" "/tmp" "/run" "/var/run"
+WORKDIR "${DOCKER_HOME}"
 
 COPY setup-sshd /usr/local/bin/setup-sshd
-
+STOPSIGNAL SIGRTMIN+3
 EXPOSE 22
 
 ENTRYPOINT ["/usr/local/bin/setup-sshd"]

@@ -27,17 +27,17 @@ set -ex
 # Usage:
 #  docker run jenkinsci/ssh-slave <public key>
 # or
-#  docker run -e "JENKINS_SLAVE_SSH_PUBKEY=<public key>" jenkinsci/ssh-slave
+#  docker run -e "SSH_PUBKEY=<public key>" jenkinsci/ssh-slave
 
 write_key() {
-	mkdir -p "${JENKINS_AGENT_HOME}/.ssh"
-	echo "$1" > "${JENKINS_AGENT_HOME}/.ssh/authorized_keys"
-	chown -Rf jenkins:jenkins "${JENKINS_AGENT_HOME}/.ssh"
-	chmod 0700 -R "${JENKINS_AGENT_HOME}/.ssh"
+	mkdir -p "${DOCKER_HOME}/.ssh"
+	echo "$1" > "${DOCKER_HOME}/.ssh/authorized_keys"
+	chown -Rf jenkins:jenkins "${DOCKER_HOME}/.ssh"
+	chmod 0700 -R "${DOCKER_HOME}/.ssh"
 }
 
-if [[ $JENKINS_SLAVE_SSH_PUBKEY == ssh-* ]]; then
-  write_key "${JENKINS_SLAVE_SSH_PUBKEY}"
+if [[ $SSH_PUBKEY == ssh-* ]]; then
+  write_key "${SSH_PUBKEY}"
 fi
 if [[ $# -gt 0 ]]; then
   if [[ $1 == ssh-* ]]; then
@@ -53,4 +53,4 @@ fi
 env | grep _ >> /etc/environment
 
 ssh-keygen -A
-exec /usr/sbin/sshd -D -e "${@}"
+exec /usr/sbin/init

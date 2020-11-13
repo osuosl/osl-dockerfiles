@@ -21,7 +21,7 @@ ARG VERSION=1.8.6
 # other things, assets are minified & compressed).
 ENV NODE_ENV=production
 
-RUN apt update && apt install -y git
+RUN apt update && apt full-upgrade -y && apt install -y git && apt -y clean all
 
 # Follow the principle of least privilege: run as unprivileged user.
 #

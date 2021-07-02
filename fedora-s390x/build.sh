@@ -1,5 +1,6 @@
 #!/bin/bash
 set -ex
-docker build -t osuosl/fedora-s390x:28 --build-arg VERSION=28 .
-docker build -t osuosl/fedora-s390x:29 --build-arg VERSION=29 .
-docker tag osuosl/fedora-s390x:29 osuosl/fedora-s390x:latest
+docker build -t osuosl/fedora-s390x:32 --build-arg VERSION=32 .
+docker build -t osuosl/fedora-s390x:33 --build-arg VERSION=33 .
+docker build -t osuosl/fedora-s390x:34 --build-arg VERSION=34 .
+docker tag osuosl/fedora-s390x:34 osuosl/fedora-s390x:latest

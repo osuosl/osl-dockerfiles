@@ -1,4 +1,4 @@
-ARG VERSION="16.04"
+ARG VERSION="20.04"
 FROM s390x/ubuntu:${VERSION}
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 
@@ -13,6 +13,7 @@ ARG JENKINS_AGENT_HOME=/home/${user}
 ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
 ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk
 ENV PATH $PATH:$JAVA_HOME/bin
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN groupadd -g ${gid} ${group} && \
     useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"

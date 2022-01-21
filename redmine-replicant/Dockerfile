@@ -1,4 +1,4 @@
-ARG VERSION="4.1.1"
+ARG VERSION="4.2.3"
 FROM redmine:${VERSION}
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 

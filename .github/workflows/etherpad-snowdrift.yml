@@ -1,0 +1,54 @@
+---
+name: etherpad-snowdrift
+
+on:
+  push:
+    branches:
+      - master
+    paths: etherpad-snowdrift/*
+  pull_request:
+    paths: etherpad-snowdrift/*
+  schedule:
+    - cron: '15 */4 * * *'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: etherpad-snowdrift
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Build and export Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: etherpad-snowdrift
+          tags: osuosl/etherpad-snowdrift:test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Log in to the Container registry
+        if: contains(fromJSON('["push", "schedule"]'), github.event_name)
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        if: contains(fromJSON('["push", "schedule"]'), github.event_name)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      - name: Build and push Docker image
+        if: contains(fromJSON('["push", "schedule"]'), github.event_name)
+        uses: docker/build-push-action@v5
+        with:
+          context: etherpad-snowdrift
+          push: true
+          tags: latest
+          labels: ${{ steps.meta.outputs.labels }}

@@ -52,5 +52,5 @@ jobs:
         with:
           context: etherpad-snowdrift
           push: true
-          tags: latest
+          tags: ghcr.io/osuosl/etherpad-snowdrift:latest
           labels: ${{ steps.meta.outputs.labels }}

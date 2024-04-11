@@ -9,7 +9,7 @@ on:
   pull_request:
     paths: etherpad-snowdrift/*
   schedule:
-    - cron: '15 */4 * * *'
+    - cron: '15 18 * * 3'
 
 env:
   REGISTRY: ghcr.io

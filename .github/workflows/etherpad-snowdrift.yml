@@ -46,6 +46,9 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=schedule,${{ github.ref_name }}
       - name: Build and push Docker image
         if: contains(fromJSON('["push", "schedule"]'), github.event_name)
         uses: docker/build-push-action@v5

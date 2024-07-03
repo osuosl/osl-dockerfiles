@@ -1,16 +1,16 @@
-ARG VERSION="8"
+ARG VERSION="9"
 
 FROM almalinux:${VERSION}
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 
-ARG OS_RELEASE="xena"
+ARG OS_RELEASE="yoga"
 
-RUN yum install -y epel-release centos-release-openstack-${OS_RELEASE} && \
-    yum upgrade -y && \
-    yum install -y wget git qemu-kvm unzip curl python3-openstackclient \
+RUN dnf install -y epel-release centos-release-openstack-${OS_RELEASE} && \
+    dnf upgrade -y && \
+    dnf install -y --allowerasing wget git qemu-kvm unzip curl python3-openstackclient \
         yum-utils gcc gcc-c++ make && \
     yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo && \
-    yum install -y packer && \
+    dnf install -y packer && \
     ln -s /usr/bin/packer /usr/local/bin/packer && \
     curl -L https://omnitruck.cinc.sh/install.sh | bash && \
     /opt/cinc/embedded/bin/gem install -N berkshelf && \

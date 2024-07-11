@@ -1,8 +1,8 @@
-ARG VERSION="20.04"
-FROM s390x/ubuntu:${VERSION}
+ARG VERSION="24.04"
+FROM ubuntu:${VERSION}
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 
-# Below was taken from https://github.com/jenkinsci/docker-ssh-slave
+# Below was taken from https://github.com/jenkinsci/docker-ssh-agent
 
 ARG user=jenkins
 ARG group=jenkins
@@ -11,7 +11,7 @@ ARG gid=10000
 ARG JENKINS_AGENT_HOME=/home/${user}
 
 ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
-ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk
+ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk-s390x
 ENV PATH $PATH:$JAVA_HOME/bin
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -28,7 +28,7 @@ RUN apt-get update && \
 RUN apt-get update && \
     apt-get install --no-install-recommends -y autoconf binutils-doc bison \
     build-essential flex gettext ncurses-dev automake asciidoc curl wget \
-    lsb-release openjdk-8-jdk git && \
+    lsb-release openjdk-21-jdk-headless openjdk-21-jre-headless git && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Setup ccache

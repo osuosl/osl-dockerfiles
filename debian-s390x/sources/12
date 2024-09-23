@@ -1,0 +1,3 @@
+deb http://debian.osuosl.org/debian bookworm main
+deb http://debian.osuosl.org/debian bookworm-updates main
+deb http://security.debian.org bookworm/updates main

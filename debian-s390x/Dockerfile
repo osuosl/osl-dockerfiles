@@ -1,4 +1,4 @@
-ARG VERSION="122"
+ARG VERSION="12"
 FROM s390x/debian:${VERSION}
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 
@@ -16,7 +16,7 @@ ENV JAVA_HOME /usr/lib/jvm/java-${JDK_VER}-openjdk
 ENV PATH $PATH:$JAVA_HOME/bin
 ENV DEBIAN_FRONTEND=noninteractive
 
-ARG VERSION="10"
+ARG VERSION="12"
 COPY sources/${VERSION} /etc/apt/sources.list
 
 RUN groupadd -g ${gid} ${group} && \

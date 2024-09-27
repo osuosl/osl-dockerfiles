@@ -15,6 +15,7 @@ ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
 ENV JAVA_HOME /usr/lib/jvm/java-${JDK_VER}-openjdk
 ENV PATH $PATH:$JAVA_HOME/bin
 ENV DEBIAN_FRONTEND=noninteractive
+ENV HOME ${JENKINS_AGENT_HOME}
 
 RUN groupadd -g ${gid} ${group} && \
     useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"

@@ -1,7 +1,10 @@
-FROM registry.access.redhat.com/ubi9/ubi:9.3
-RUN yum upgrade -y && \
-    yum clean all && \
-    rm -rf /var/cache/yum
+ARG VERSION="9.5"
+FROM registry.access.redhat.com/ubi9/ubi:${VERSION}
+LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
+
+RUN dnf upgrade -y && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf
 
 ARG user=jenkins
 ARG group=jenkins
@@ -15,20 +18,22 @@ RUN groupadd -g ${gid} ${group} && \
     useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"
 
 # setup sudo
-RUN yum install -y sudo && \
-    yum clean all && \
+RUN dnf install -y sudo && \
+    dnf clean all && \
     rm -rf /var/cache/yum && \
 	echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-# Ensure all files are owned by jenkins in its homedir
-RUN chown -R ${user}:${group} ${JENKINS_AGENT_HOME}
-RUN chown -R ${user}:${group} /var/cache/dnf
+RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 
-RUN dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm -y
+# Install packages we need
+RUN dnf install -y autoconf gcc gcc-c++ gettext make m4 patch ncurses-devel \
+      java-21-openjdk git && \
+    dnf clean all && \
+    rm -rf /var/cache/yum
 
 # Setup ccache
-RUN yum install -y ccache && \
-    yum clean all && \
+RUN dnf install -y ccache && \
+    dnf clean all && \
     rm -rf /var/cache/yum && \
     mkdir -p /var/cache/ccache && \
     chown ${user}:${group} /var/cache/ccache && \
@@ -36,8 +41,8 @@ RUN yum install -y ccache && \
 COPY ccache.conf /etc/ccache.conf
 
 # setup SSH server
-RUN yum install -y openssh-server && \
-    yum clean all && \
+RUN dnf install -y openssh-server && \
+    dnf clean all && \
     rm -rf /var/cache/yum && \
     sed -i 's/#PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config && \
     sed -i 's/#RSAAuthentication.*/RSAAuthentication yes/' /etc/ssh/sshd_config && \

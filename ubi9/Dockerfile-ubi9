@@ -1,0 +1,57 @@
+FROM registry.access.redhat.com/ubi9/ubi:9.3
+RUN yum upgrade -y && \
+    yum clean all && \
+    rm -rf /var/cache/yum
+
+ARG user=jenkins
+ARG group=jenkins
+ARG uid=10000
+ARG gid=10000
+ARG JENKINS_AGENT_HOME=/home/${user}
+
+ENV JENKINS_AGENT_HOME=${JENKINS_AGENT_HOME}
+
+RUN groupadd -g ${gid} ${group} && \
+    useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"
+
+# setup sudo
+RUN yum install -y sudo && \
+    yum clean all && \
+    rm -rf /var/cache/yum && \
+	echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Ensure all files are owned by jenkins in its homedir
+RUN chown -R ${user}:${group} ${JENKINS_AGENT_HOME}
+RUN chown -R ${user}:${group} /var/cache/dnf
+
+RUN dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm -y
+
+# Setup ccache
+RUN yum install -y ccache && \
+    yum clean all && \
+    rm -rf /var/cache/yum && \
+    mkdir -p /var/cache/ccache && \
+    chown ${user}:${group} /var/cache/ccache && \
+    chmod 2777 /var/cache/ccache
+COPY ccache.conf /etc/ccache.conf
+
+# setup SSH server
+RUN yum install -y openssh-server && \
+    yum clean all && \
+    rm -rf /var/cache/yum && \
+    sed -i 's/#PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config && \
+    sed -i 's/#RSAAuthentication.*/RSAAuthentication yes/' /etc/ssh/sshd_config && \
+    sed -i 's/#PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config && \
+    sed -i 's/#SyslogFacility.*/SyslogFacility AUTH/' /etc/ssh/sshd_config && \
+    sed -i 's/#LogLevel.*/LogLevel INFO/' /etc/ssh/sshd_config && \
+    mkdir /var/run/sshd && \
+    ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ''
+
+VOLUME "${JENKINS_AGENT_HOME}" "/tmp" "/run" "/var/run"
+WORKDIR "${JENKINS_AGENT_HOME}"
+
+COPY setup-sshd /usr/local/bin/setup-sshd
+
+EXPOSE 22
+
+ENTRYPOINT ["/usr/local/bin/setup-sshd"]

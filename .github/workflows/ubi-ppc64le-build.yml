@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: 'ubi-ppc64le'
+  IMAGE_NAME:  ${{ github.repository_owner }}/'ubi-ppc64le'
 
 jobs:
     build-ubi-builder-img:

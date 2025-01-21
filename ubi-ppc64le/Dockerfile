@@ -40,7 +40,7 @@ RUN dnf install -y ccache && \
     chmod 2777 /var/cache/ccache
 COPY ccache.conf /etc/ccache.conf
 
-# setup SSH server
+# Setup SSH server
 RUN dnf install -y openssh-server && \
     dnf clean all && \
     rm -rf /var/cache/yum && \

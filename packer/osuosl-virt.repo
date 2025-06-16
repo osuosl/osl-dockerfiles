@@ -1,0 +1,18 @@
+[RDO-openstack]
+name=OpenStack RDO yoga
+baseurl=https://vault.centos.org/8-stream/cloud/ppc64le/openstack-yoga
+enabled=1
+fastestmirror_enabled=0
+gpgcheck=1
+gpgkey=https://www.centos.org/keys/RPM-GPG-KEY-CentOS-SIG-Cloud
+priority=20
+module_hotfixes=1
+
+[OSL-openstack]
+name=OpenStack OSL yoga
+baseurl=https://ftp.osuosl.org/pub/osl/repos/yum/$releasever/openstack-yoga/$basearch
+enabled=1
+fastestmirror_enabled=0
+gpgcheck=1
+gpgkey=https://ftp.osuosl.org/pub/osl/repos/yum/RPM-GPG-KEY-osuosl-2024
+priority=10

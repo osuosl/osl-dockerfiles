@@ -11,7 +11,7 @@ ARG gid=10000
 ARG JENKINS_AGENT_HOME=/home/${user}
 
 ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
-ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk
+ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk
 ENV PATH $PATH:$JAVA_HOME/bin
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -33,7 +33,7 @@ RUN apt-get update && \
 RUN apt-get update && \
     apt-get install --no-install-recommends -y autoconf binutils-doc bison \
     build-essential flex gettext ncurses-dev automake asciidoc curl wget \
-    lsb-release openjdk-21-jdk git && \
+    lsb-release openjdk-17-jdk git && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Setup ccache

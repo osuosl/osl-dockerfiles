@@ -15,9 +15,6 @@ ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk
 ENV PATH $PATH:$JAVA_HOME/bin
 ENV DEBIAN_FRONTEND=noninteractive
 
-ARG VERSION="12"
-COPY sources/${VERSION} /etc/apt/sources.list
-
 RUN groupadd -g ${gid} ${group} && \
     useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"
 

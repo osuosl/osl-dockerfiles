@@ -13,6 +13,7 @@ ARG JENKINS_AGENT_HOME=/home/${user}
 ENV JENKINS_AGENT_HOME=${JENKINS_AGENT_HOME}
 ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-ppc64le
 ENV PATH=$PATH:$JAVA_HOME/bin
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN groupadd -g ${gid} ${group} && \
     useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"

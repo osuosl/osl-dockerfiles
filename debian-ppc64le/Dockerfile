@@ -14,6 +14,7 @@ ARG JDK_VER=8
 ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
 ENV JAVA_HOME /usr/lib/jvm/java-1.${JDK_VER}.0-openjdk
 ENV PATH $PATH:$JAVA_HOME/bin
+ENV DEBIAN_FRONTEND=noninteractive
 
 ARG VERSION="9"
 COPY sources/${VERSION} /etc/apt/sources.list

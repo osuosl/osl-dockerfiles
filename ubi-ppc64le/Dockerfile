@@ -1,4 +1,4 @@
-ARG VERSION="9.5"
+ARG VERSION="9.6"
 FROM registry.access.redhat.com/ubi9/ubi:${VERSION}
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 

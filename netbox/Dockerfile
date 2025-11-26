@@ -19,7 +19,9 @@ LABEL org.opencontainers.image.description="NetBox with OSL custom plugins"
 COPY plugin_requirements.txt /opt/netbox/
 RUN /usr/local/bin/uv pip install --no-cache-dir -r /opt/netbox/plugin_requirements.txt
 
-# Copy plugin configuration
+# Copy default plugin configuration (enables all installed plugins)
+# This can be overridden at runtime by mounting a custom plugins.py
+# e.g., -v /path/to/plugins.py:/etc/netbox/config/plugins.py:ro
 COPY plugins.py /etc/netbox/config/plugins.py
 
 # Collect static files for plugins that have them

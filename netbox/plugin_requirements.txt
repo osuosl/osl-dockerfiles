@@ -1,0 +1,26 @@
+# NetBox plugins for OSL
+# See: https://github.com/netbox-community/netbox/wiki/Plugins
+
+# Secret/password management for NetBox
+# https://github.com/Onemind-Services-LLC/netbox-secrets
+netbox-secrets
+
+# Datacenter floor plan visualization
+# https://github.com/netbox-community/netbox-floorplan-plugin
+netbox-floorplan-plugin
+
+# Access Control List management
+# https://github.com/netbox-community/netbox-acls
+netbox-acls
+
+# Network topology visualization
+# https://github.com/netbox-community/netbox-topology-views
+netbox-topology-views
+
+# Drag-and-drop rack reordering
+# https://github.com/netbox-community/netbox-reorder-rack
+netbox-reorder-rack
+
+# Hardware inventory tracking
+# https://github.com/ArnesSI/netbox-inventory
+netbox-inventory

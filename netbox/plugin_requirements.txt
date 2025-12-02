@@ -1,6 +1,10 @@
 # NetBox plugins for OSL
 # See: https://github.com/netbox-community/netbox/wiki/Plugins
 
+# LDAP authentication support
+# https://django-auth-ldap.readthedocs.io/
+django-auth-ldap
+
 # Secret/password management for NetBox
 # https://github.com/Onemind-Services-LLC/netbox-secrets
 netbox-secrets

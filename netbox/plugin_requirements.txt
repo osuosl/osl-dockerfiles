@@ -1,30 +1,26 @@
 # NetBox plugins for OSL
 # See: https://github.com/netbox-community/netbox/wiki/Plugins
 
-# LDAP authentication support
-# https://django-auth-ldap.readthedocs.io/
-django-auth-ldap
-
 # Secret/password management for NetBox
 # https://github.com/Onemind-Services-LLC/netbox-secrets
-netbox-secrets
+netbox-secrets~=2.4.2
 
 # Datacenter floor plan visualization
 # https://github.com/netbox-community/netbox-floorplan-plugin
-netbox-floorplan-plugin
+netbox-floorplan-plugin~=0.8.0
 
 # Access Control List management
 # https://github.com/netbox-community/netbox-acls
-netbox-acls
+netbox-acls~=1.9.1
 
 # Network topology visualization
 # https://github.com/netbox-community/netbox-topology-views
-netbox-topology-views
+netbox-topology-views~=4.5.0
 
 # Drag-and-drop rack reordering
 # https://github.com/netbox-community/netbox-reorder-rack
-netbox-reorder-rack
+netbox-reorder-rack~=1.1.4
 
 # Hardware inventory tracking
 # https://github.com/ArnesSI/netbox-inventory
-netbox-inventory
+netbox-inventory~=2.4.1

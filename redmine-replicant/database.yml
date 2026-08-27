@@ -1,0 +1,9 @@
+# Ships our own database.yml (entrypoint then skips generating one) so we can size the pool, which the stock config omits
+production:
+  adapter: mysql2
+  host: "<%= ENV['REDMINE_DB_MYSQL'] %>"
+  port: <%= ENV.fetch('REDMINE_DB_PORT', 3306) %>
+  username: "<%= ENV['REDMINE_DB_USERNAME'] %>"
+  password: "<%= ENV['REDMINE_DB_PASSWORD'] %>"
+  database: "<%= ENV['REDMINE_DB_DATABASE'] %>"
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS', 5) %>

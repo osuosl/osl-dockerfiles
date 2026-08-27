@@ -29,7 +29,7 @@ jobs:
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Build and export Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: ubi-ppc64le
           tags: osuosl/ubi-ppc64le:test
@@ -54,7 +54,7 @@ jobs:
             type=schedule,${{ github.ref_name }}
       - name: Build and push Docker image
         if: contains(fromJSON('["push", "schedule"]'), github.event_name)
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: ubi-ppc64le
           push: true

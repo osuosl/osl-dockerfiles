@@ -1,0 +1,61 @@
+---
+name: redmine-replicant
+
+on:
+  push:
+    branches:
+      - master
+    paths: redmine-replicant/*
+  pull_request:
+    paths: redmine-replicant/*
+  schedule:
+    - cron: '15 19 * * 3'
+  workflow_dispatch:
+    # Allow manual triggering
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: redmine-replicant
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and export Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: redmine-replicant
+          tags: osuosl/redmine-replicant:test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Log in to the Container registry
+        if: contains(fromJSON('["push", "schedule"]'), github.event_name) || github.event_name == 'workflow_dispatch'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        if: contains(fromJSON('["push", "schedule"]'), github.event_name) || github.event_name == 'workflow_dispatch'
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=schedule,${{ github.ref_name }}
+      - name: Build and push Docker image
+        if: contains(fromJSON('["push", "schedule"]'), github.event_name) || github.event_name == 'workflow_dispatch'
+        uses: docker/build-push-action@v5
+        with:
+          context: redmine-replicant
+          push: true
+          tags: ghcr.io/osuosl/redmine-replicant:latest
+          labels: ${{ steps.meta.outputs.labels }}

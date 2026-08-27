@@ -6,6 +6,10 @@ updates:
     directory: /redmine-replicant
     schedule:
       interval: weekly
+  - package-ecosystem: docker
+    directory: /redmine-mulgara
+    schedule:
+      interval: weekly
   - package-ecosystem: github-actions
     directory: /
     schedule:

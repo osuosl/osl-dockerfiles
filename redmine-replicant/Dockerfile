@@ -1,5 +1,5 @@
-ARG VERSION="6.0.11"
-FROM redmine:${VERSION}
+# Version pinned directly in FROM (no ARG) so Dependabot can parse and bump it
+FROM redmine:6.0.11
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 
 # Replace homepage with the replicant project page; grep guards against the sed silently not matching on future upgrades

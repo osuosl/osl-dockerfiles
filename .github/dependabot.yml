@@ -1,0 +1,12 @@
+---
+version: 2
+updates:
+  # Note: merging a redmine bump publishes ghcr latest, which chef deploys on its next converge (db migrations are one-way)
+  - package-ecosystem: docker
+    directory: /redmine-replicant
+    schedule:
+      interval: weekly
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

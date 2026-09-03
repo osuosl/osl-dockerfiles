@@ -1,5 +1,5 @@
 # Version pinned directly in FROM (no ARG) so Dependabot can parse and bump it
-FROM redmine:6.1.2
+FROM redmine:7.0.1
 LABEL MAINTAINER="OSU Open Source Lab <dockerhub@osuosl.org>"
 
 # Homepage becomes the replicant project: drop every stock welcome root (6.1 has two) and insert ours first; final grep fails the build if the patch ever stops applying
